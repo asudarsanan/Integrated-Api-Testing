@@ -1,0 +1,306 @@
+{
+	"info": {
+		"_postman_id": "93fe2dda-da17-4c45-812a-5b9894097450",
+		"name": "DemoAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET Employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    ",
+							"    pm.response.to.have.status(200);",
+							"    ",
+							"});",
+							"",
+							"pm.test(\"Check First Employee name\", function () {",
+							"    ",
+							"      var jsonData = pm.response.json();",
+							"      ",
+							"      for(var i=0; i<jsonData.data.length; i++)",
+							"      ",
+							"        {",
+							"             if (jsonData.data[i].employee_name===\"Tiger Nixon\")",
+							"               ",
+							"                {",
+							"                    ",
+							"                      pm.expect(jsonData.data[i].id).to.equal(\"1\")",
+							"                }   ",
+							"        }",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/v1/employees",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    ",
+							"    pm.response.to.have.status(200);",
+							"    ",
+							"});",
+							"",
+							"if(responseCode.code == 200)",
+							"{",
+							"    ",
+							"    var jsonData = pm.response.json()",
+							"    pm.globals.set(\"employeeId\", jsonData.data.id);",
+							"    console.log(pm.globals.get(\"employeeId\"))",
+							"    ",
+							"}",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\t{\n\t\t\"name\":\"employee post\",\n\t\t\"salary\":\"4000\",\n\t\t\"age\":\"23\"\n\t\t\n\t}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/v1/create",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Employee update",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    ",
+							"    pm.response.to.have.status(200);",
+							"    ",
+							"});",
+							"pm.test(\"Check updated Employee name\", function () {",
+							"    ",
+							"if(responseCode.code == 200)",
+							"{",
+							"    ",
+							"    var jsonData = pm.response.json()",
+							"    pm.expect(jsonData.data.employee_name).to.equal(\"employee updated\")",
+							"    ",
+							"}",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\t{\n\t\t\"name\":\"employee updated\",\n\t\t\"salary\":\"1123\",\n\t\t\"age\":\"23\"\n\t\t\n\t}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/v1/update/{{employeeId}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"update",
+						"{{employeeId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Employee Specific",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    ",
+							"    pm.response.to.have.status(200);",
+							"    ",
+							"});",
+							"pm.test(\"Check updated Employee name\", function () {",
+							"    ",
+							"if(responseCode.code == 200)",
+							"{",
+							"    ",
+							"    var jsonData = pm.response.json()",
+							"    pm.expect(jsonData.data.employee_name).to.equal(\"employee updated\")",
+							"    ",
+							"}",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/v1/employee/{{employeeId}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"employee",
+						"{{employeeId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    ",
+							"    pm.response.to.have.status(200);",
+							"    ",
+							"});",
+							"pm.test(\"Check delete success message\", function () {",
+							"    ",
+							"if(responseCode.code == 200)",
+							"{",
+							"    ",
+							"    var jsonData = pm.response.json()",
+							"    pm.expect(jsonData.status).to.equal(\"success\")",
+							"    ",
+							"}",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/v1/delete/{{employeeId}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"delete",
+						"{{employeeId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Employee after DELETE",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {",
+							"    ",
+							"    pm.response.to.have.status(401);",
+							"    ",
+							"});",
+							"pm.test(\"Check employee deleted\", function () {",
+							"    ",
+							"if(responseCode.code == 401)",
+							"{",
+							"    ",
+							"    var jsonData = pm.response.json()",
+							"    pm.expect(jsonData.status).to.equal(\"failed\")",
+							"    ",
+							"}",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/v1/employee/{{employeeId}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"employee",
+						"{{employeeId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
